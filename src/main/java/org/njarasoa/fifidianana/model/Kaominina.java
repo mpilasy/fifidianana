@@ -4,6 +4,8 @@ import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +35,17 @@ public class Kaominina extends IdValuePair {
     }
 
     public String anaranaFeno() {
-        return (distrikta.anaranaFeno()
-                + ValimpifidiananaProcessor.SEPARATOR
-                + anarana).trim();
+        return MessageFormat.format("{0}{1}{2}", distrikta.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
+    }
+
+    public List<EfitraFifidianana> getEfitraFifidiananaList()
+    {
+        List<EfitraFifidianana> efitraList = new ArrayList<>();
+        for (Fokontany fokontany: fokontanyList)
+        {
+            efitraList.addAll(fokontany.getEfitraFifidiananaList());
+        }
+        return efitraList;
+
     }
 }

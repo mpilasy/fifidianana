@@ -62,9 +62,13 @@ public class RemoteHelper {
             }
         }
         long end = System.currentTimeMillis();
-        ValimpifidiananaProcessor.timeLogs.add("It took " + (end - start) + "ms to retrieve [" + _url + "]");
+        long duration = end - start;
+        totalIOTime += duration;
+        ValimpifidiananaProcessor.timeLogs.add("It took " + duration + "ms to retrieve [" + _url + "]");
         return strs;
     }
+
+    public static long totalIOTime = 0;
 
     private static void someMethod() {
         TrustManager[] trustAllCerts = new TrustManager[]{

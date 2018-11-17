@@ -4,6 +4,8 @@ import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +38,16 @@ public class Distrikta extends IdValuePair {
     }
 
     public String anaranaFeno() {
-        return faritra.getAnarana()
-                + ValimpifidiananaProcessor.SEPARATOR
-                + anarana;
+        return MessageFormat.format("{0}{1}{2}", faritra.getAnarana(), ValimpifidiananaProcessor.SEPARATOR, anarana);
+    }
+
+    public List<EfitraFifidianana> getEfitraFifidiananaList()
+    {
+        List<EfitraFifidianana> efitraList = new ArrayList<>();
+        for (Kaominina kaominina: kaomininaList)
+        {
+            efitraList.addAll(kaominina.getEfitraFifidiananaList());
+        }
+        return efitraList;
     }
 }

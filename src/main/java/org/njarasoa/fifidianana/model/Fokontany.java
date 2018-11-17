@@ -4,6 +4,8 @@ import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +35,16 @@ public class Fokontany extends IdValuePair {
     }
 
     public String anaranaFeno() {
-        return (kaominina.anaranaFeno()
-                + ValimpifidiananaProcessor.SEPARATOR
-                + anarana).trim();
+        return MessageFormat.format("{0}{1}{2}", kaominina.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
+    }
+
+    public List<EfitraFifidianana> getEfitraFifidiananaList()
+    {
+        List<EfitraFifidianana> efitraList = new ArrayList<>();
+        for (ToeramPifidianana toerana: toeramPifidiananaList)
+        {
+            efitraList.addAll(toerana.getEfitraFifidiananaList());
+        }
+        return efitraList;
     }
 }

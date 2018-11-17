@@ -3,6 +3,7 @@ package org.njarasoa.fifidianana.model;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +36,15 @@ public class Faritra extends IdValuePair {
         return ds;
     }
 
+    public List<EfitraFifidianana> getEfitraFifidiananaList()
+    {
+        List<EfitraFifidianana> efitraList = new ArrayList<>();
+        for (Distrikta distrikta: distriktaList)
+        {
+            efitraList.addAll(distrikta.getEfitraFifidiananaList());
+        }
+        return efitraList;
+    }
 
     public static final List<String> AnaranaFaritraList = Arrays.asList(
 //            "11-ANALAMANGA",
@@ -55,9 +65,9 @@ public class Faritra extends IdValuePair {
 //            "51-ALAOTRA-MANGORO",
 //            "52-ANALANJIROFO",
 //            "53-ATSINANANA",
-//            "61-ANDROY",
+            "61-ANDROY" //,
 //            "62-ANOSY",
 //            "63-ATSIMO-ANDREFANA",
-            "64-MENABE"
+//            "64-MENABE"
     );
 }

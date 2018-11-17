@@ -4,6 +4,7 @@ import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,6 @@ public class ToeramPifidianana extends IdValuePair {
     }
 
     public String anaranaFeno() {
-        return (fokontany.anaranaFeno()
-                + ValimpifidiananaProcessor.SEPARATOR
-                + anarana).trim();
+        return MessageFormat.format("{0}{1}{2}", fokontany.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
     }
 }

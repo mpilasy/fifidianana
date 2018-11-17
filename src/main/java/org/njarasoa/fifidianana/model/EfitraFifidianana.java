@@ -3,6 +3,9 @@ package org.njarasoa.fifidianana.model;
 import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 
+import java.text.MessageFormat;
+import java.util.Objects;
+
 public class EfitraFifidianana extends IdValuePair {
     private ToeramPifidianana toeramPifidianana;
 
@@ -14,18 +17,13 @@ public class EfitraFifidianana extends IdValuePair {
     }
 
     public String anaranaFeno() {
-        String str = id
-                + ValimpifidiananaProcessor.SEPARATOR
-                + toeramPifidianana.anaranaFeno();
+        String str = MessageFormat.format("{0}{1}{2}", id, ValimpifidiananaProcessor.SEPARATOR, toeramPifidianana.anaranaFeno());
 
-        if (!anarana.equals(toeramPifidianana.getAnarana())) {
-            str = str
-                    + ValimpifidiananaProcessor.SEPARATOR
-                    + anarana;
+        if (!Objects.equals(anarana, toeramPifidianana.getAnarana())) {
+            str = MessageFormat.format("{0}{1}{2}", str, ValimpifidiananaProcessor.SEPARATOR, anarana);
         }
-        str = ValimpifidiananaProcessor.getNextCount()
-                + ": "
-                + str.trim().replace(" ", "_");
+
+        str = MessageFormat.format("{0}: {1}", ValimpifidiananaProcessor.getNextCount(), str.trim().replace(" ", "_"));
         return str;
     }
 
