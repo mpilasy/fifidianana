@@ -1,7 +1,8 @@
 package org.njarasoa.fifidianana.model;
 
-import org.njarasoa.fifidianana.Main;
+import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
+import org.njarasoa.fifidianana.util.RemoteHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,9 +21,8 @@ public class Fokontany extends IdValuePair {
         return toeramPifidiananaList;
     }
 
-    private static final String URL = "https://presidentielle.ceni-madagascar.mg/cv/chargecv/";
     private List<ToeramPifidianana> retrieveToeramPifidiananaList(String id) {
-        List<String> strs = Main.getURL(URL + id);
+        List<String> strs = RemoteHelper.getURL(RemoteHelper.TOERAMPIFIDIANANA_URL + id);
 
         List<ToeramPifidianana> tps = strs.parallelStream().map(i -> new ToeramPifidianana(i, this)).collect(Collectors.toList());
 
@@ -31,7 +31,7 @@ public class Fokontany extends IdValuePair {
 
     public String anaranaFeno() {
         return (kaominina.anaranaFeno()
-                + Main.SEPARATOR
+                + ValimpifidiananaProcessor.SEPARATOR
                 + anarana).trim();
     }
 }

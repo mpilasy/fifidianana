@@ -1,7 +1,8 @@
 package org.njarasoa.fifidianana.model;
 
-import org.njarasoa.fifidianana.Main;
+import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
+import org.njarasoa.fifidianana.util.RemoteHelper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,10 +24,8 @@ public class Distrikta extends IdValuePair {
         return kaomininaList;
     }
 
-    private static final String URL = "https://presidentielle.ceni-madagascar.mg/commune/chargecommune/";
-
     private List<Kaominina> retrieveKaomininaList(String id) {
-        List<String> strs = Main.getURL(URL + id);
+        List<String> strs = RemoteHelper.getURL(RemoteHelper.KAOMININA_URL + id);
 
         List<Kaominina> ks = strs.parallelStream().map(i -> new Kaominina(i, this)).collect(Collectors.toList());
 
@@ -35,7 +34,7 @@ public class Distrikta extends IdValuePair {
 
     public String anaranaFeno() {
         return faritra.getAnarana()
-                + Main.SEPARATOR
+                + ValimpifidiananaProcessor.SEPARATOR
                 + anarana;
     }
 }

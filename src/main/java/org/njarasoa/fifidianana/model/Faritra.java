@@ -1,7 +1,7 @@
 package org.njarasoa.fifidianana.model;
 
-import org.njarasoa.fifidianana.Main;
 import org.njarasoa.fifidianana.util.IdValuePair;
+import org.njarasoa.fifidianana.util.RemoteHelper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,10 +23,8 @@ public class Faritra extends IdValuePair {
         return distriktaList;
     }
 
-    private static final String URL = "https://presidentielle.ceni-madagascar.mg/district/chargedistrict/";
-
     private List<Distrikta> retrieveDistriktaList(String id) {
-        List<String> strs = Main.getURL(URL + id);
+        List<String> strs = RemoteHelper.getURL(RemoteHelper.DISTRIKTA_URL + id);
 
         List<Distrikta> ds = strs.parallelStream().map(i -> new Distrikta(i, this)).collect(Collectors.toList());
 

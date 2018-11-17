@@ -1,7 +1,6 @@
-package org.njarasoa.fifidianana;
+package org.njarasoa.fifidianana.util;
 
-import org.njarasoa.fifidianana.model.Faritra;
-import org.njarasoa.fifidianana.model.Fokontany;
+import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -16,21 +15,14 @@ import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class Main {
-
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-
-        List<Faritra> faritraList = Faritra.AnaranaFaritraList.parallelStream().map(i -> new Faritra(i)).collect(Collectors.toList());
-
-        
-        long end = System.currentTimeMillis();
-        System.out.println("It took " + (end - start) + "ms to run he whole thing.");
-        System.out.println("We made " + timeLogs.size() + " calls to the server.");
-
-    }
+public class RemoteHelper {
+    public static final String CENI_URL = "https://presidentielle.ceni-madagascar.mg";
+    public static final String KAOMININA_URL = CENI_URL + "/commune/chargecommune/";
+    public static final String DISTRIKTA_URL = CENI_URL + "/district/chargedistrict/";
+    public static final String TOERAMPIFIDIANANA_URL = CENI_URL + "/cv/chargecv/";
+    public static final String FOKONTANY_URL = CENI_URL + "/fokontany/chargefokontany/";
+    public static final String EFITRA_FIFIDIANANA_URL = CENI_URL + "/bv/chargebv/";
 
     public static List<String> getURL(String _url) {
         long start = System.currentTimeMillis();
@@ -70,12 +62,10 @@ public class Main {
             }
         }
         long end = System.currentTimeMillis();
-        timeLogs.add("It took " + (end - start) + "ms to retrieve [" + _url + "]");
+        ValimpifidiananaProcessor.timeLogs.add("It took " + (end - start) + "ms to retrieve [" + _url + "]");
         return strs;
     }
 
-    // private static List<Fokontany> fokontanyList = new ArrayList<>();
-    private static List<String> timeLogs = new ArrayList<String>();
     private static void someMethod() {
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
@@ -99,6 +89,4 @@ public class Main {
             e.printStackTrace();
         }
     }
-
-    public static final String SEPARATOR = "-";
 }

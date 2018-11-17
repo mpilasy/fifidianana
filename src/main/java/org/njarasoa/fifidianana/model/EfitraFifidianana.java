@@ -1,6 +1,6 @@
 package org.njarasoa.fifidianana.model;
 
-import org.njarasoa.fifidianana.Main;
+import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 
 public class EfitraFifidianana extends IdValuePair {
@@ -15,10 +15,14 @@ public class EfitraFifidianana extends IdValuePair {
 
     public String anaranaFeno() {
         String str = id
-                + Main.SEPARATOR
-                + toeramPifidianana.anaranaFeno()
-                + Main.SEPARATOR
-                + anarana;
+                + ValimpifidiananaProcessor.SEPARATOR
+                + toeramPifidianana.anaranaFeno();
+
+        if (!anarana.equals(toeramPifidianana.getAnarana())) {
+            str = str
+                    + ValimpifidiananaProcessor.SEPARATOR
+                    + anarana;
+        }
         str = str.trim().replace(" ", "_");
         return str;
     }
