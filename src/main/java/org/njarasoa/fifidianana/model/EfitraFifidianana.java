@@ -23,7 +23,9 @@ public class EfitraFifidianana extends IdValuePair {
             str = MessageFormat.format("{0}{1}{2}", str, ValimpifidiananaProcessor.SEPARATOR, anarana);
         }
 
-        str = MessageFormat.format("{0}: {1}", ValimpifidiananaProcessor.getNextCount(), str.trim().replace(" ", "_"));
+        str = MessageFormat.format("{0}{1}{2}", ValimpifidiananaProcessor.SEPARATOR,
+                ValimpifidiananaProcessor.getNextCount(),
+                str.trim().replace(" ", "_"));
         return str;
     }
 
