@@ -8,32 +8,30 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ToeramPifidianana extends IdValuePair {
+class ToeramPifidianana extends IdValuePair {
     private List<EfitraFifidianana> efitraFifidiananaList;
-    private Fokontany fokontany;
+    private Fokontany parent;
 
-    public ToeramPifidianana(String _string, Fokontany _fokontany) {
+    ToeramPifidianana(String _string, Fokontany _fokontany) {
         super(_string);
-        fokontany = _fokontany;
+        parent = _fokontany;
         efitraFifidiananaList = retrieveEfitraFifidiananaList(id);
     }
 
-    public List<EfitraFifidianana> getEfitraFifidiananaList() {
+    List<EfitraFifidianana> getEfitraFifidiananaList() {
         return efitraFifidiananaList;
     }
 
     private List<EfitraFifidianana> retrieveEfitraFifidiananaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.EFITRA_FIFIDIANANA_URL + id);
 
-        List<EfitraFifidianana> efs = strs
+        return strs
                 .parallelStream()
                 .map(i -> new EfitraFifidianana(i, this))
                 .collect(Collectors.toList());
-
-        return efs;
     }
 
-    public String anaranaFeno() {
-        return MessageFormat.format("{0}{1}{2}", fokontany.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
+    String anaranaFeno() {
+        return MessageFormat.format("{0}{1}{2}", parent.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
     }
 }

@@ -6,25 +6,26 @@ import org.njarasoa.fifidianana.util.IdValuePair;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-public class EfitraFifidianana extends IdValuePair {
-    private ToeramPifidianana toeramPifidianana;
+class EfitraFifidianana extends IdValuePair {
+    private ToeramPifidianana parent;
 
-    public EfitraFifidianana(String _string, ToeramPifidianana _tp) {
+    EfitraFifidianana(String _string, ToeramPifidianana _tp) {
         super(_string);
-        toeramPifidianana = _tp;
+        parent = _tp;
 
         System.out.println(anaranaFeno());
     }
 
-    public String anaranaFeno() {
-        String str = MessageFormat.format("{0}{1}{2}", id, ValimpifidiananaProcessor.SEPARATOR, toeramPifidianana.anaranaFeno());
+    private String anaranaFeno() {
+        String str = MessageFormat.format("{0}{1}{2}", id, ValimpifidiananaProcessor.SEPARATOR, parent.anaranaFeno());
 
-        if (!Objects.equals(anarana, toeramPifidianana.getAnarana())) {
+        if (!Objects.equals(anarana, parent.getAnarana())) {
             str = MessageFormat.format("{0}{1}{2}", str, ValimpifidiananaProcessor.SEPARATOR, anarana);
         }
 
-        str = MessageFormat.format("{0}{1}{2}", ValimpifidiananaProcessor.SEPARATOR,
+        str = MessageFormat.format("{0}{1}{2}",
                 ValimpifidiananaProcessor.getNextCount(),
+                ValimpifidiananaProcessor.SEPARATOR,
                 str.trim().replace(" ", "_"));
         return str;
     }

@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 public class Fokontany extends IdValuePair {
     private List<ToeramPifidianana> toeramPifidiananaList;
-    private Kaominina kaominina;
+    private Firaisana parent;
 
-    public Fokontany(String _string, Kaominina _kaominina) {
+    Fokontany(String _string, Firaisana _firaisana) {
         super(_string);
-        kaominina = _kaominina;
+        parent = _firaisana;
         toeramPifidiananaList = retrieveToeramPifidiananaList(id);
     }
 
@@ -26,19 +26,17 @@ public class Fokontany extends IdValuePair {
     private List<ToeramPifidianana> retrieveToeramPifidiananaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.TOERAMPIFIDIANANA_URL + id);
 
-        List<ToeramPifidianana> tps = strs
+        return strs
                 .parallelStream()
                 .map(i -> new ToeramPifidianana(i, this))
                 .collect(Collectors.toList());
-
-        return tps;
     }
 
-    public String anaranaFeno() {
-        return MessageFormat.format("{0}{1}{2}", kaominina.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
+    String anaranaFeno() {
+        return MessageFormat.format("{0}{1}{2}", parent.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
     }
 
-    public List<EfitraFifidianana> getEfitraFifidiananaList()
+    List<EfitraFifidianana> getEfitraFifidiananaList()
     {
         List<EfitraFifidianana> efitraList = new ArrayList<>();
         for (ToeramPifidianana toerana: toeramPifidiananaList)

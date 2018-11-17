@@ -14,21 +14,22 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RemoteHelper {
-    public static final String CENI_URL = "https://presidentielle.ceni-madagascar.mg";
-    public static final String KAOMININA_URL = CENI_URL + "/commune/chargecommune/";
-    public static final String DISTRIKTA_URL = CENI_URL + "/district/chargedistrict/";
-    public static final String TOERAMPIFIDIANANA_URL = CENI_URL + "/cv/chargecv/";
+    private static final String CENI_URL = "https://presidentielle.ceni-madagascar.mg";
+    public static final String FIVONDRONANA_URL = CENI_URL + "/district/chargedistrict/";
+    public static final String FIRAISANA_URL = CENI_URL + "/commune/chargecommune/";
     public static final String FOKONTANY_URL = CENI_URL + "/fokontany/chargefokontany/";
+    public static final String TOERAMPIFIDIANANA_URL = CENI_URL + "/cv/chargecv/";
     public static final String EFITRA_FIFIDIANANA_URL = CENI_URL + "/bv/chargebv/";
 
     public static List<String> getURL(String _url) {
         long start = System.currentTimeMillis();
         someMethod();
 
-        List<String> strs = new ArrayList<String>();
+        List<String> strs = new ArrayList<>();
         InputStream is = null;
 
         try {
@@ -51,6 +52,13 @@ public class RemoteHelper {
             reader.close();
 
         } catch (IOException e) {
+            String msg = e.getMessage();
+            System.out.println(_url + " caused [" + e.getMessage() + "]");
+            long count = 0;
+            if (errors.containsKey(msg)) {
+                count = errors.get(msg);
+            }
+            errors.put(msg, ++count);
             e.printStackTrace();
         } finally {
             if (is != null) {
@@ -69,6 +77,7 @@ public class RemoteHelper {
     }
 
     public static long totalIOTime = 0;
+    public static HashMap<String, Long> errors = new HashMap<>();
 
     private static void someMethod() {
         TrustManager[] trustAllCerts = new TrustManager[]{

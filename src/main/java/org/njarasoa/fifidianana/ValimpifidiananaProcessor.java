@@ -22,7 +22,7 @@ public class ValimpifidiananaProcessor {
 
         List<Faritra> faritraList = Faritra.AnaranaFaritraList
                 .parallelStream()
-                .map(i -> new Faritra(i))
+                .map(Faritra::new)
                 .collect(Collectors.toList());
 
         long end = System.currentTimeMillis();
@@ -34,11 +34,12 @@ public class ValimpifidiananaProcessor {
                 count,
                 faritraList.stream().mapToInt(f -> f.getEfitraFifidiananaList().size()).summaryStatistics().getSum()));
         System.out.println(MessageFormat.format("We made {0} calls to the server.", timeLogs.size()));
+        RemoteHelper.errors.keySet().forEach(x -> System.out.println(x + " was received [" + RemoteHelper.errors.get(x) + "] times"));
 
     }
 
     // private static List<Fokontany> fokontanyList = new ArrayList<>();
-    public static List<String> timeLogs = new ArrayList<String>();
+    public static List<String> timeLogs = new ArrayList<>();
 
     public static final String SEPARATOR = "^";
 }

@@ -10,38 +10,36 @@ import java.util.stream.Collectors;
 
 public class Faritra extends IdValuePair {
 
-    private List<Distrikta> distriktaList;
+    private List<Fivondronana> fivondronanaList;
 
 
     public Faritra(String _string) {
         super(_string);
-        distriktaList = retrieveDistriktaList(id);
+        fivondronanaList = retrieveDistriktaList(id);
     }
 
-    public List<Distrikta> getDistriktaList() {
-        if (distriktaList == null) {
-            distriktaList = retrieveDistriktaList(id);
+    public List<Fivondronana> getFivondronanaList() {
+        if (fivondronanaList == null) {
+            fivondronanaList = retrieveDistriktaList(id);
         }
-        return distriktaList;
+        return fivondronanaList;
     }
 
-    private List<Distrikta> retrieveDistriktaList(String id) {
-        List<String> strs = RemoteHelper.getURL(RemoteHelper.DISTRIKTA_URL + id);
+    private List<Fivondronana> retrieveDistriktaList(String id) {
+        List<String> strs = RemoteHelper.getURL(RemoteHelper.FIVONDRONANA_URL + id);
 
-        List<Distrikta> ds = strs
+        return strs
                 .parallelStream()
-                .map(i -> new Distrikta(i, this))
+                .map(i -> new Fivondronana(i, this))
                 .collect(Collectors.toList());
-
-        return ds;
     }
 
     public List<EfitraFifidianana> getEfitraFifidiananaList()
     {
         List<EfitraFifidianana> efitraList = new ArrayList<>();
-        for (Distrikta distrikta: distriktaList)
+        for (Fivondronana fivondronana : fivondronanaList)
         {
-            efitraList.addAll(distrikta.getEfitraFifidiananaList());
+            efitraList.addAll(fivondronana.getEfitraFifidiananaList());
         }
         return efitraList;
     }
