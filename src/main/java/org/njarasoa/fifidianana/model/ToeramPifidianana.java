@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 class ToeramPifidianana extends IdValuePair {
-    private List<EfitraFifidianana> efitraFifidiananaList;
-    private Fokontany parent;
+    private final List<EfitraFifidianana> efitraFifidiananaList;
+    private final Fokontany parent;
 
     ToeramPifidianana(String _string, Fokontany _fokontany) {
         super(_string);

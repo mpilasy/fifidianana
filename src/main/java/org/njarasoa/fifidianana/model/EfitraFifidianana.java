@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 import java.util.Objects;
 
 class EfitraFifidianana extends IdValuePair {
-    private ToeramPifidianana parent;
+    private final ToeramPifidianana parent;
 
     EfitraFifidianana(String _string, ToeramPifidianana _tp) {
         super(_string);

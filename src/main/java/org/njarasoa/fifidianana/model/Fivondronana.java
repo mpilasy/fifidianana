@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Fivondronana extends IdValuePair {
+class Fivondronana extends IdValuePair {
     private List<Firaisana> firaisanaList;
-    private Faritra parent;
+    private final Faritra parent;
 
     Fivondronana(String _string, Faritra _faritra) {
         super(_string);

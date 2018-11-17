@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Firaisana extends IdValuePair {
-    private List<Fokontany> fokontanyList;
-    private Fivondronana parent;
+class Firaisana extends IdValuePair {
+    private final List<Fokontany> fokontanyList;
+    private final Fivondronana parent;
 
     Firaisana(String _string, Fivondronana _fivondronana) {
         super(_string);

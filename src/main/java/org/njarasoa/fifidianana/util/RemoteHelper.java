@@ -77,7 +77,7 @@ public class RemoteHelper {
     }
 
     public static long totalIOTime = 0;
-    public static HashMap<String, Long> errors = new HashMap<>();
+    public static final HashMap<String, Long> errors = new HashMap<>();
 
     private static void someMethod() {
         TrustManager[] trustAllCerts = new TrustManager[]{

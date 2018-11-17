@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact name="fifidianana:jar">
+  <artifact build-on-make="true" name="fifidianana:jar">
     <output-path>$PROJECT_DIR$/bin/artifacts/fifidianana_jar</output-path>
     <root id="root">
       <element id="archive" name="fifidianana.jar">

@@ -9,12 +9,12 @@ public class IdValuePair {
         anarana = _anarana.trim();
     }
 
-    public IdValuePair(String _string) {
+    protected IdValuePair(String _string) {
         String str = _string.trim();
         int pos = str.indexOf("-");
 
-        id = str.substring(0, pos);
-        anarana = str.substring(pos + 1);
+        id = str.substring(0, pos).trim();
+        anarana = str.substring(pos + 1).trim();
     }
 
 

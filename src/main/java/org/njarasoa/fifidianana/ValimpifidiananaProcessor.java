@@ -39,7 +39,7 @@ public class ValimpifidiananaProcessor {
     }
 
     // private static List<Fokontany> fokontanyList = new ArrayList<>();
-    public static List<String> timeLogs = new ArrayList<>();
+    public static final List<String> timeLogs = new ArrayList<>();
 
     public static final String SEPARATOR = "^";
 }

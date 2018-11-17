@@ -6,7 +6,7 @@
 
     <groupId>groupId</groupId>
     <artifactId>fifidianana</artifactId>
-    <version>0.01-SNAPSHOT</version>
+    <version>0.02-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
