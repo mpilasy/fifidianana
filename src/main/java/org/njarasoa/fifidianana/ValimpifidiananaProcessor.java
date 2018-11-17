@@ -8,6 +8,13 @@ import java.util.stream.Collectors;
 
 public class ValimpifidiananaProcessor {
 
+    private static long count = 0;
+
+    public synchronized static long getNextCount()
+    {
+        return ++count;
+    }
+
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
@@ -17,7 +24,9 @@ public class ValimpifidiananaProcessor {
                 .collect(Collectors.toList());
 
         long end = System.currentTimeMillis();
+
         System.out.println("It took " + (end - start) + "ms to run he whole thing.");
+        System.out.println("We found " + count + " efi-pifidianana.");
         System.out.println("We made " + timeLogs.size() + " calls to the server.");
 
     }

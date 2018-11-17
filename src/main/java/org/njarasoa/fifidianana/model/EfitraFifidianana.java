@@ -23,7 +23,9 @@ public class EfitraFifidianana extends IdValuePair {
                     + ValimpifidiananaProcessor.SEPARATOR
                     + anarana;
         }
-        str = str.trim().replace(" ", "_");
+        str = ValimpifidiananaProcessor.getNextCount()
+                + ": "
+                + str.trim().replace(" ", "_");
         return str;
     }
 
