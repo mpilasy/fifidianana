@@ -20,7 +20,10 @@ public class Kaominina extends IdValuePair {
     private List<Fokontany> retrieveFokontanyList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.FOKONTANY_URL + id);
 
-        List<Fokontany> fs = strs.parallelStream().map(i -> new Fokontany(i, this)).collect(Collectors.toList());
+        List<Fokontany> fs = strs
+                .parallelStream()
+                .map(i -> new Fokontany(i, this))
+                .collect(Collectors.toList());
 
         return fs;
     }

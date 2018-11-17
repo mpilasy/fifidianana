@@ -11,7 +11,10 @@ public class ValimpifidiananaProcessor {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
-        List<Faritra> faritraList = Faritra.AnaranaFaritraList.parallelStream().map(i -> new Faritra(i)).collect(Collectors.toList());
+        List<Faritra> faritraList = Faritra.AnaranaFaritraList
+                .parallelStream()
+                .map(i -> new Faritra(i))
+                .collect(Collectors.toList());
 
         long end = System.currentTimeMillis();
         System.out.println("It took " + (end - start) + "ms to run he whole thing.");

@@ -3,7 +3,8 @@ package org.njarasoa.fifidianana.model;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Faritra extends IdValuePair {
@@ -26,7 +27,10 @@ public class Faritra extends IdValuePair {
     private List<Distrikta> retrieveDistriktaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.DISTRIKTA_URL + id);
 
-        List<Distrikta> ds = strs.parallelStream().map(i -> new Distrikta(i, this)).collect(Collectors.toList());
+        List<Distrikta> ds = strs
+                .parallelStream()
+                .map(i -> new Distrikta(i, this))
+                .collect(Collectors.toList());
 
         return ds;
     }

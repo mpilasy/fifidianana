@@ -24,7 +24,10 @@ public class Fokontany extends IdValuePair {
     private List<ToeramPifidianana> retrieveToeramPifidiananaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.TOERAMPIFIDIANANA_URL + id);
 
-        List<ToeramPifidianana> tps = strs.parallelStream().map(i -> new ToeramPifidianana(i, this)).collect(Collectors.toList());
+        List<ToeramPifidianana> tps = strs
+                .parallelStream()
+                .map(i -> new ToeramPifidianana(i, this))
+                .collect(Collectors.toList());
 
         return tps;
     }

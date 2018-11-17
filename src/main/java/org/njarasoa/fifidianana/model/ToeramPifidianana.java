@@ -24,7 +24,10 @@ public class ToeramPifidianana extends IdValuePair {
     private List<EfitraFifidianana> retrieveEfitraFifidiananaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.EFITRA_FIFIDIANANA_URL + id);
 
-        List<EfitraFifidianana> efs = strs.parallelStream().map(i -> new EfitraFifidianana(i, this)).collect(Collectors.toList());
+        List<EfitraFifidianana> efs = strs
+                .parallelStream()
+                .map(i -> new EfitraFifidianana(i, this))
+                .collect(Collectors.toList());
 
         return efs;
     }

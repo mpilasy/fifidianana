@@ -27,7 +27,10 @@ public class Distrikta extends IdValuePair {
     private List<Kaominina> retrieveKaomininaList(String id) {
         List<String> strs = RemoteHelper.getURL(RemoteHelper.KAOMININA_URL + id);
 
-        List<Kaominina> ks = strs.parallelStream().map(i -> new Kaominina(i, this)).collect(Collectors.toList());
+        List<Kaominina> ks = strs
+                .parallelStream()
+                .map(i -> new Kaominina(i, this))
+                .collect(Collectors.toList());
 
         return ks;
     }
