@@ -1,6 +1,6 @@
 package org.njarasoa.fifidianana.util;
 
-import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
+import org.njarasoa.fifidianana.rafitra.LisitraBiraoProcessor;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -24,6 +24,20 @@ public class RemoteHelper {
     public static final String FOKONTANY_URL = CENI_URL + "/fokontany/chargefokontany/";
     public static final String TOERAMPIFIDIANANA_URL = CENI_URL + "/cv/chargecv/";
     public static final String EFITRA_FIFIDIANANA_URL = CENI_URL + "/bv/chargebv/";
+    public static final String VALINY_URL = CENI_URL + "/bvres/bvrese/";
+    public static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[]{
+            new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+    };
 
     public static List<String> getURL(String _url) {
         long start = System.currentTimeMillis();
@@ -72,7 +86,7 @@ public class RemoteHelper {
         long end = System.currentTimeMillis();
         long duration = end - start;
         totalIOTime += duration;
-        ValimpifidiananaProcessor.timeLogs.add("It took " + duration + "ms to retrieve [" + _url + "]");
+        LisitraBiraoProcessor.timeLogs.add("It took " + duration + "ms to retrieve [" + _url + "]");
         return strs;
     }
 
@@ -80,26 +94,14 @@ public class RemoteHelper {
     public static final HashMap<String, Long> errors = new HashMap<>();
 
     private static void someMethod() {
-        TrustManager[] trustAllCerts = new TrustManager[]{
-                new X509TrustManager() {
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return null;
-                    }
-
-                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
-                    }
-
-                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
-                    }
-                }
-        };
-
-        try {
-            SSLContext sslContext = SSLContext.getInstance("SSL");
-            sslContext.init(null, trustAllCerts, new SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (HttpsURLConnection.getDefaultSSLSocketFactory() == null) {
+            try {
+                SSLContext sslContext = SSLContext.getInstance("SSL");
+                sslContext.init(null, TRUST_ALL_CERTS, new SecureRandom());
+                HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

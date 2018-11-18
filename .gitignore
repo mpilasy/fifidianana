@@ -4,3 +4,8 @@ target/
 *.ods
 *.xls
 *.csv
+*.ods#
+*.zip
+*.out
+*.log
+output/

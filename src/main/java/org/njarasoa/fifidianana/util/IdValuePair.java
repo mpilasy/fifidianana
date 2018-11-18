@@ -14,7 +14,13 @@ public class IdValuePair {
         int pos = str.indexOf("-");
 
         id = str.substring(0, pos).trim();
-        anarana = str.substring(pos + 1).trim();
+        anarana = str.substring(pos + 1)
+                .replace("/", "_")
+                .replace("\\", "_")
+                .replace("^", "_")
+                .replace("*", "_")
+                .replace("?", "_")
+                .trim();
     }
 
 

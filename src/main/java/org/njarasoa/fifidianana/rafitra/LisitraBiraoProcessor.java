@@ -1,6 +1,6 @@
-package org.njarasoa.fifidianana;
+package org.njarasoa.fifidianana.rafitra;
 
-import org.njarasoa.fifidianana.model.Faritra;
+import org.njarasoa.fifidianana.rafitra.model.Faritra;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
 import java.text.MessageFormat;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ValimpifidiananaProcessor {
+public class LisitraBiraoProcessor {
 
     private static long count = 0;
 

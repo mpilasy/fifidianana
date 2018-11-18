@@ -1,6 +1,6 @@
-package org.njarasoa.fifidianana.model;
+package org.njarasoa.fifidianana.rafitra.model;
 
-import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
+import org.njarasoa.fifidianana.rafitra.LisitraBiraoProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;
 
@@ -33,7 +33,7 @@ class Firaisana extends IdValuePair {
     }
 
     String anaranaFeno() {
-        return MessageFormat.format("{0}{1}{2}", parent.anaranaFeno(), ValimpifidiananaProcessor.SEPARATOR, anarana).trim();
+        return MessageFormat.format("{0}{1}{2}", parent.anaranaFeno(), LisitraBiraoProcessor.SEPARATOR, anarana).trim();
     }
 
     List<EfitraFifidianana> getEfitraFifidiananaList()

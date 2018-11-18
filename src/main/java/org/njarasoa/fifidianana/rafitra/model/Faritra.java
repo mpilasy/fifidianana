@@ -1,4 +1,4 @@
-package org.njarasoa.fifidianana.model;
+package org.njarasoa.fifidianana.rafitra.model;
 
 import org.njarasoa.fifidianana.util.IdValuePair;
 import org.njarasoa.fifidianana.util.RemoteHelper;

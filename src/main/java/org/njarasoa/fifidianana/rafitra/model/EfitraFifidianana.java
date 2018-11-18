@@ -1,6 +1,6 @@
-package org.njarasoa.fifidianana.model;
+package org.njarasoa.fifidianana.rafitra.model;
 
-import org.njarasoa.fifidianana.ValimpifidiananaProcessor;
+import org.njarasoa.fifidianana.rafitra.LisitraBiraoProcessor;
 import org.njarasoa.fifidianana.util.IdValuePair;
 
 import java.text.MessageFormat;
@@ -17,15 +17,15 @@ class EfitraFifidianana extends IdValuePair {
     }
 
     private String anaranaFeno() {
-        String str = MessageFormat.format("{0}{1}{2}", id, ValimpifidiananaProcessor.SEPARATOR, parent.anaranaFeno());
+        String str = MessageFormat.format("{0}{1}{2}", id, LisitraBiraoProcessor.SEPARATOR, parent.anaranaFeno());
 
         if (!Objects.equals(anarana, parent.getAnarana())) {
-            str = MessageFormat.format("{0}{1}{2}", str, ValimpifidiananaProcessor.SEPARATOR, anarana);
+            str = MessageFormat.format("{0}{1}{2}", str, LisitraBiraoProcessor.SEPARATOR, anarana);
         }
 
         str = MessageFormat.format("{0}{1}{2}",
-                ValimpifidiananaProcessor.getNextCount(),
-                ValimpifidiananaProcessor.SEPARATOR,
+                LisitraBiraoProcessor.getNextCount(),
+                LisitraBiraoProcessor.SEPARATOR,
                 str.trim().replace(" ", "_"));
         return str;
     }
