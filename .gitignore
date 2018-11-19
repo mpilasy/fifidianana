@@ -4,6 +4,7 @@ target/
 *.ods
 *.xls
 *.csv
+*.csv#
 *.ods#
 *.zip
 *.out

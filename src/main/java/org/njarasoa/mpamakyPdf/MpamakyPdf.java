@@ -14,30 +14,43 @@ import java.util.regex.Pattern;
 
 class MpamakyPdf {
     public static void main(String[] args) {
-        if (args.length != 1) {
+        if (args.length < 1) {
             System.out.println("We are dead!");
-        } else
+        } else {
+            Arrays.asList(args).stream().forEach(fname -> parsePdf(fname));
+        }
+    }
 
-            try (PDDocument document = PDDocument.load(new File(args[0]))) {
-                AccessPermission ap = document.getCurrentAccessPermission();
-                if (!ap.canExtractContent()) {
-                    throw new IOException("You do not have permission to extract text");
-                }
+    private static void parsePdf(String _fname) {
+        File file = new File(_fname);
+        String efitra = file.getName();
+        String birao = file.getParentFile().getName();
+        String fokontany = file.getParentFile().getParentFile().getName();
+        String firaisana = file.getParentFile().getParentFile().getParentFile().getName();
+        String fivondronana = file.getParentFile().getParentFile().getParentFile().getParentFile().getName();
+        String faritra = file.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getName();
+        System.out.println("==========" + efitra);
 
-                PDFTextStripper stripper = new PDFTextStripper();
+        try (PDDocument document = PDDocument.load(file)) {
+            AccessPermission ap = document.getCurrentAccessPermission();
+            if (!ap.canExtractContent()) {
+                throw new IOException("You do not have permission to extract text");
+            }
 
-                // This example uses sorting, but in some cases it is more useful to switch it off,
-                // e.g. in some files with columns where the PDF content stream respects the
-                // column order.
-                stripper.setSortByPosition(true);
+            PDFTextStripper stripper = new PDFTextStripper();
 
-                for (int p = 1; p <= document.getNumberOfPages(); ++p) {
-                    // Set the page interval to extract. If you don't, then all pages would be extracted.
-                    stripper.setStartPage(p);
-                    stripper.setEndPage(p);
+            // This example uses sorting, but in some cases it is more useful to switch it off,
+            // e.g. in some files with columns where the PDF content stream respects the
+            // column order.
+            stripper.setSortByPosition(true);
 
-                    // let the magic happen
-                    String text = stripper.getText(document);
+            for (int p = 1; p <= document.getNumberOfPages(); ++p) {
+                // Set the page interval to extract. If you don't, then all pages would be extracted.
+                stripper.setStartPage(p);
+                stripper.setEndPage(p);
+
+                // let the magic happen
+                String text = stripper.getText(document);
 
 //                    // do some nice output with a header
 //                    String pageStr = String.format("page %d:", p);
@@ -45,39 +58,46 @@ class MpamakyPdf {
 //                    for (int i = 0; i < pageStr.length(); ++i) {
 //                        System.out.print("-");
 //                    }
+//                    System.out.println("");
 
-                    List<String> a = Arrays.asList(text.split("\n"));
+                List<String> a = Arrays.asList(text.split("\n"));
 
-                    // System.out.println(i + ":" + a[i]);
-                    a.parallelStream().forEach(MpamakyPdf::processLine);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                // System.out.println(i + ":" + a[i]);
+                a.stream().forEach(MpamakyPdf::processLine);
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static void processLine(String s) {
-        if (s.startsWith("BV")) {
+    private static void processLine(String _s) {
+        if (_s.startsWith("BV")) {
             // process BV
-        } else if (s.startsWith("Inscrits")) {
+            System.out.println("BV: " + _s);
+        } else if (_s.startsWith("Inscrits")) {
             // process misoratra anarana
-        } else if (s.startsWith("Votants")) {
+            System.out.println("Voasoratra anarana: " + _s);
+        } else if (_s.startsWith("Votants")) {
             // process mpifidy
-        } else if (s.startsWith("Blancs et Nuls")) {
+            System.out.println("Nifidy: " + _s);
+        } else if (_s.startsWith("Blancs et Nuls")) {
             // process vato maty sy tsy manakery
-        } else if (!s.contains(":")
-            && ((s.startsWith("1")
-                || s.startsWith("2")
-                || s.startsWith("3")
-                || s.startsWith("4")
-                || s.startsWith("5")
-                || s.startsWith("6")
-                || s.startsWith("7")
-                || s.startsWith("8")
-                || s.startsWith("9")
-                || s.startsWith("0")))) {
+            System.out.println("Maty: " + _s);
+        } else if (!_s.contains(":")
+                && ((_s.startsWith("1")
+                || _s.startsWith("2")
+                || _s.startsWith("3")
+                || _s.startsWith("4")
+                || _s.startsWith("5")
+                || _s.startsWith("6")
+                || _s.startsWith("7")
+                || _s.startsWith("8")
+                || _s.startsWith("9")
+                || _s.startsWith("0")))) {
             // process result
-            parseKandidaValiny(s);
+            parseKandidaValiny(_s);
+        } else {
+            System.out.println("-" + _s);
         }
     }
 
