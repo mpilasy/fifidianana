@@ -3,10 +3,12 @@ package org.njarasoa.mpamakyPdf;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.njarasoa.mpamakyPdf.model.Valimpifidianana;
+import org.njarasoa.mpamakyPdf.model.Valimpifidianana.ValimpifidiananaBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -17,11 +19,16 @@ class MpamakyPdf {
         if (args.length < 1) {
             System.out.println("We are dead!");
         } else {
-            Arrays.asList(args).stream().forEach(fname -> parsePdf(fname));
+            List<Valimpifidianana> valiny = new ArrayList<>();
+            Arrays.asList(args).stream().forEach(fname -> parsePdf(fname, valiny));
+            save(valiny);
         }
     }
 
-    private static void parsePdf(String _fname) {
+    private static void save(List<Valimpifidianana> valiny) {
+    }
+
+    public static Valimpifidianana parsePdf(String _fname, List<Valimpifidianana> _valiny) {
         File file = new File(_fname);
         String efitra = file.getName();
         String birao = file.getParentFile().getName();
@@ -29,7 +36,16 @@ class MpamakyPdf {
         String firaisana = file.getParentFile().getParentFile().getParentFile().getName();
         String fivondronana = file.getParentFile().getParentFile().getParentFile().getParentFile().getName();
         String faritra = file.getParentFile().getParentFile().getParentFile().getParentFile().getParentFile().getName();
-        System.out.println("==========" + efitra);
+        // System.out.println("==========" + efitra);
+
+        ValimpifidiananaBuilder b = new ValimpifidiananaBuilder();
+
+        b.withFaritra(faritra)
+                .withFivondronana(fivondronana)
+                .withFiraisana(firaisana)
+                .withFokontany(fokontany)
+                .withBirao(birao)
+                .withEfitra(efitra);
 
         try (PDDocument document = PDDocument.load(file)) {
             AccessPermission ap = document.getCurrentAccessPermission();
@@ -60,54 +76,58 @@ class MpamakyPdf {
 //                    }
 //                    System.out.println("");
 
-                List<String> a = Arrays.asList(text.split("\n"));
+                List<String> lines = Arrays.asList(text.split("\n"));
 
-                // System.out.println(i + ":" + a[i]);
-                a.stream().forEach(MpamakyPdf::processLine);
+                for (String line : lines) {
+                    processLine(line, b);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Valimpifidianana v = b.build();
+        _valiny.add(v);
+        return v;
     }
 
-    private static void processLine(String _s) {
-        if (_s.startsWith("BV")) {
-            // process BV
-            System.out.println("BV: " + _s);
-        } else if (_s.startsWith("Inscrits")) {
-            // process misoratra anarana
-            System.out.println("Voasoratra anarana: " + _s);
-        } else if (_s.startsWith("Votants")) {
-            // process mpifidy
-            System.out.println("Nifidy: " + _s);
-        } else if (_s.startsWith("Blancs et Nuls")) {
-            // process vato maty sy tsy manakery
-            System.out.println("Maty: " + _s);
-        } else if (!_s.contains(":")
-                && ((_s.startsWith("1")
-                || _s.startsWith("2")
-                || _s.startsWith("3")
-                || _s.startsWith("4")
-                || _s.startsWith("5")
-                || _s.startsWith("6")
-                || _s.startsWith("7")
-                || _s.startsWith("8")
-                || _s.startsWith("9")
-                || _s.startsWith("0")))) {
+    private static void processLine(String _line, ValimpifidiananaBuilder _builder) {
+        if (_line.contains("Ce bureau de vote n'est pas encore traité"))
+        {
+            _builder.withNote(_line.trim());
+        }
+        if (_line.startsWith("Inscrits")) {
+            String[] vals = _line.split(":");
+            _builder.withNisotratraAnarana(Long.parseLong(vals[1].trim()));
+        } else if (_line.startsWith("Blancs et Nuls")) {
+            String[] vals = _line.split(":");
+            String[] vals2 = vals[1].trim().split(" ");
+            _builder.withVatoMaty(Long.parseLong(vals2[0].trim()));
+        } else if (!_line.contains(":")
+                && ((_line.startsWith("1")
+                || _line.startsWith("2")
+                || _line.startsWith("3")
+                || _line.startsWith("4")
+                || _line.startsWith("5")
+                || _line.startsWith("6")
+                || _line.startsWith("7")
+                || _line.startsWith("8")
+                || _line.startsWith("9")
+                || _line.startsWith("0")))) {
             // process result
-            parseKandidaValiny(_s);
+            parseKandidaValiny(_line, _builder);
         } else {
-            System.out.println("-" + _s);
+            // System.out.println("-" + _line);
         }
     }
 
-    private static void parseKandidaValiny(String s) {
+    private static void parseKandidaValiny(String s, ValimpifidiananaBuilder _builder) {
         Matcher m = p.matcher(s.trim());
         if (m.find()) {
-            int laharana = Integer.parseInt(m.group(1));
+            int laharana = Integer.parseInt(m.group(1).trim());
             String anarana = m.group(2).trim();
-            long vatoAzo = Long.parseLong(m.group(3));
-            System.out.println(MessageFormat.format("{0}:{1}:{2}", laharana, anarana, vatoAzo));
+            long vatoAzo = Long.parseLong(m.group(3).trim());
+            _builder.withVatoAzo(laharana, vatoAzo);
         }
     }
 
